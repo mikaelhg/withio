@@ -15,14 +15,20 @@ try (var input = Files.newBufferedReader(inputFile);
 ... and with this library ...
 
 ```kotlin
+import io.mikael.withio.InputOutput
+
 val a = Files.newBufferedReader(inputFile)
 val b = Files.newBufferedWriter(outputFile)
 InputOutput(a, b).use { io ->
     val data = io.input.readText()
     io.output.write(data)
 }
+```
 
-withInputOutput()
+```kotlin
+import io.mikael.withio.withInputOutput
+
+withInputOutput<BufferedReader, BufferedWriter>()
     .withInput { Files.newBufferedReader(inputFile) }
     .withOutput { Files.newBufferedWriter(outputFile) }
     .use { io ->
