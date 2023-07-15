@@ -12,7 +12,7 @@ class InputOutputTests {
         val input = "foobar"
         val a = StringReader(input)
         val b = StringWriter()
-        InputOutput.inputOutput(a, b).use { io ->
+        InputOutput(a, b).use { io ->
             val data = io.input.readText()
             io.output.write(data)
         }

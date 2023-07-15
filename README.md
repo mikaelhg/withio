@@ -17,8 +17,16 @@ try (var input = Files.newBufferedReader(inputFile);
 ```kotlin
 val a = Files.newBufferedReader(inputFile)
 val b = Files.newBufferedWriter(outputFile)
-InputOutput.inputOutput(a, b).use { io ->
+InputOutput(a, b).use { io ->
     val data = io.input.readText()
     io.output.write(data)
 }
+
+withInputOutput()
+    .withInput { Files.newBufferedReader(inputFile) }
+    .withOutput { Files.newBufferedWriter(outputFile) }
+    .use { io ->
+        val data = io.input.readText()
+        io.output.write(data)
+    }
 ```
