@@ -35,4 +35,7 @@ withInputOutput<BufferedReader, BufferedWriter>()
         val data = io.input.readText()
         io.output.write(data)
     }
+    .then { io ->
+        /* if you still need the input and output for something */
+    }
 ```

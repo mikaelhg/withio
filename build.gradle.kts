@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
+    implementation("org.mockito:mockito-junit-jupiter:5.4.0")
 }
 
 tasks.test {

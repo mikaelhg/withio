@@ -2,6 +2,7 @@ package io.mikael.withio
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.mockito.Mockito.*
 import java.io.BufferedReader
 import java.io.BufferedWriter
 import java.io.StringReader
@@ -24,7 +25,23 @@ class InputOutputTests {
     }
 
     @Test
-    fun builder() {
+    fun stringBuilder() {
+        val input = "foobar"
+        withInputOutput<StringReader, StringWriter>()
+            .withInput { spy(StringReader(input)) }
+            .withOutput { spy(StringWriter()) }
+            .use { io ->
+                io.output.write(io.input.readText())
+            }
+            .then { io ->
+                Assertions.assertEquals(input, io.output.buffer.toString())
+                verify(io.input, times(1)).close()
+                verify(io.output, times(1)).close()
+            }
+    }
+
+    @Test
+    fun bufferedBuilder() {
         val inputFile = Paths.get("src/test/resources/input.1")
         val outputFile = Paths.get("build/tmp/test/output.1")
         withInputOutput<BufferedReader, BufferedWriter>()

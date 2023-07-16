@@ -3,22 +3,22 @@ package io.mikael.withio
 import java.io.Closeable
 import java.io.IOException
 
-abstract class InputOutputBase<A: Closeable, B: Closeable> : Closeable {
+interface InputOutputBase<A: Closeable, B: Closeable> {
 
-    lateinit var input: A
+    fun input(): A
 
-    lateinit var output: B
+    fun output(): B
 
     @Throws(InputOutputException::class)
-    override fun close() {
+    fun close() {
         val inputException = try {
-            input.close()
+            input().close()
             null
         } catch (e: IOException) {
             e
         }
         val outputException = try {
-            output.close()
+            output().close()
             null
         } catch (e: IOException) {
             e
